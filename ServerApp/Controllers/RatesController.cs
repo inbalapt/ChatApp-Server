@@ -17,11 +17,7 @@ namespace ServerApp.Controllers
             }
 
         }
-            rates = new List<Rate>();
-            rates.Add(new Rate() { Id = 1, Name = "Noa", Description = "good", Rating = 5 });
-            rates.Add(new Rate() { Id = 2, Name = "Inbal", Description = " ho god", Rating = 4 });
-            rates.Add(new Rate() { Id = 3, Name = "Amit", Description = "terrible", Rating = 3 });
-        }
+          
         public IActionResult Index()
         {
             return View(rates);
