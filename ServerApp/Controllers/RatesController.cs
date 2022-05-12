@@ -11,9 +11,9 @@ namespace ServerApp.Controllers
         {
             if (rates.Count == 0)
             {
-                rates.Add(new Rate() { Id = 1, Name = "Noa", Feedback = "good", Rating = 5 });
-                rates.Add(new Rate() { Id = 2, Name = "Inbal", Feedback = " ho god", Rating = 4 });
-                rates.Add(new Rate() { Id = 3, Name = "Amit", Feedback = "terrible", Rating = 3 });
+                rates.Add(new Rate() { Id = 1, Name = "Noa", Description = "good", Rating = 5 });
+                rates.Add(new Rate() { Id = 2, Name = "Inbal", Description = " ho god", Rating = 4 });
+                rates.Add(new Rate() { Id = 3, Name = "Amit", Description = "terrible", Rating = 3 });
             }
 
         }
