@@ -39,6 +39,13 @@ namespace ServerApp.Controllers
         {
             return View(rates);
         }
+        [HttpPost]
+        public IActionResult Add(string name,int rating, string description)
+        {
+            int id = rates.Max(x => x.Id)+1;
+            rates.Add(new Rate() { Rating = rating, Description = description, Name = name, Id = id});
+            return RedirectToAction(nameof(Index));
+        }
         public IActionResult Delete()
         {
             return View(rates);
