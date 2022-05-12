@@ -18,5 +18,11 @@ namespace ServerApp.Controllers
         {
             return View(rates);
         }
+
+        public IActionResult Details(int id)
+        {
+            Rate rate = rates.Find(x => x.Id == id);
+            return View(rate); 
+        }
     }
 }

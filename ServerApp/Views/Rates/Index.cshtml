@@ -1,11 +1,37 @@
 ﻿@model List<Rate>
 
-<ul>
-    @foreach (var rate in Model)
-    {
-        <li>@rate.Name</li>
-        
-    }
-    
-    
-</ul>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Rate</th>
+            <th>Feedback</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rate in Model)
+        {
+            
+           
+            <tr>
+                <td>@rate.Id</td>
+                <td>@rate.Name</td>
+                <td>@rate.Rating</td>
+                <td>@rate.Feedback</td>
+                <td>
+                    <a asp-action="Details" asp-route-id=@rate.Id>Details</a>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id=@rate.Id>Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id=@rate.Id>Delete</a>
+                </td>
+                 
+            </tr>
+            
+            
+        }
+    </tbody>
+</table>
