@@ -57,10 +57,21 @@ namespace ServerApp.Controllers
             rates.Add(new Rate() { Rating = rating, Description = description, Name = name, Id = id});
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return View(rates);
+            Rate rate = rates.Find(rate => rate.Id == id);
+            return View(rate);
         }
-
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeleteRate(int id)
+        {
+            Rate rate = rates.Find(rate => rate.Id == id);
+            if (rate != null)
+            {
+                rates.Remove(rate); 
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
