@@ -24,5 +24,19 @@ namespace ServerApp.Controllers
             Rate rate = rates.Find(x => x.Id == id);
             return View(rate); 
         }
+
+        public IActionResult Edit(int id, string name, int rate, string feedback)
+        {
+            return View(rates);
+        }
+        public IActionResult Add()
+        {
+            return View(rates);
+        }
+        public IActionResult Delete()
+        {
+            return View(rates);
+        }
+
     }
 }

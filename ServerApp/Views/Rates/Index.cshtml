@@ -1,6 +1,8 @@
 ﻿@model List<Rate>
 
 <table class="table">
+
+    <a asp-action="Add">Add Rate</a>
     <thead>
         <tr>
             <th>Id</th>
@@ -13,7 +15,6 @@
         @foreach (var rate in Model)
         {
             
-           
             <tr>
                 <td>@rate.Id</td>
                 <td>@rate.Name</td>
