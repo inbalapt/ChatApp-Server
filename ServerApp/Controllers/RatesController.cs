@@ -30,10 +30,21 @@ namespace ServerApp.Controllers
             Rate rate = rates.Find(x => x.Id == id);
             return View(rate);
         }
-
-        public IActionResult Edit(int id, string name, int rate, string feedback)
+       
+        public IActionResult Edit(int id)
         {
-            return View(rates);
+            Rate rate = rates.Find(rate => rate.Id == id);
+            return View(rate);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, string name, int rating, string description)
+        {
+            Rate rate = rates.Find(rate => rate.Id == id);
+            rate.Name = name;
+            rate.Rating = rating;
+            rate.Description = description;
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult Add()
         {
