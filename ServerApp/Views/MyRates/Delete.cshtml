@@ -1,0 +1,18 @@
+﻿@model Rate
+
+
+<ul>
+    <li>@Html:DisplayNameFor(x => Model.Id): @Model.Id</li>
+    <li>@Html:DisplayNameFor(x => Model.Name):@Model.Name</li>
+    <li>@Html:DisplayNameFor(x => Model.Rating):@Model.Rating</li>
+    <li>@Html:DisplayNameFor(x => Model.Description):@Model.Description</li>
+</ul>
+
+<form asp-action="Delete">
+
+    <div>
+        <label>Are you sure you want to delete?</label>
+        <input type="submit" value="Delete" />
+    </div>
+
+</form>

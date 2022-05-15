@@ -1,18 +1,19 @@
 ﻿@model Rate
 
 <form asp-action="Edit">
-    <input type="hidden"  name="id" value="@Model.Id"/>
+    <input type="hidden"  name="id" asp-for="Id"/>
     <div>
         <label>Name:</label>
-        <input name="name" value="@Model.Name"/>
+        <input name="name" asp-for="Name"/>
     </div>
      <div>
         <label>Rating:</label>
-        <input name="rating" value="@Model.Rating"/>
+        <input name="rating" asp-for="Rating"/>
+        <span asp-validation-for="Rating"></span>
     </div>
      <div>
         <label>Description:</label>
-        <input name="description" value="@Model.Description"/>
+        <input name="description" asp-for="Description"/>
     </div>
      <div>
         

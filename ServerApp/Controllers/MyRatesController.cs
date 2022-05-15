@@ -3,11 +3,11 @@ using ServerApp.Models;
 
 namespace ServerApp.Controllers
 {
-    public class RatesController : Controller
+    public class MyRatesController : Controller
     {
         private static List<Rate> rates = new List<Rate>();
 
-        public RatesController()
+        public MyRatesController()
         {
             if (rates.Count == 0)
             {
