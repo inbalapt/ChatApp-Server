@@ -1,20 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServerApp.Models;
+using ServerApp.Services;
 
 namespace ServerApp.Controllers
 {
     public class MyRatesController : Controller
     {
-        private static List<Rate> rates = new List<Rate>();
+        private IRateService service;
 
         public MyRatesController()
         {
-            if (rates.Count == 0)
-            {
-                rates.Add(new Rate() { Id = 1, Name = "Noa", Description = "good", Rating = 5 });
-                rates.Add(new Rate() { Id = 2, Name = "Inbal", Description = " ho god", Rating = 4 });
-                rates.Add(new Rate() { Id = 3, Name = "Amit", Description = "terrible", Rating = 3 });
-            }
+            service = new RateService();
 
         }
            
@@ -22,55 +18,45 @@ namespace ServerApp.Controllers
         
         public IActionResult Index()
         {
-            return View(rates);
+            return View(service.GetAll());
         }
 
         public IActionResult Details(int id)
-        {
-            Rate rate = rates.Find(x => x.Id == id);
-            return View(rate);
+        {           
+            return View(service.Get(id));
         }
        
         public IActionResult Edit(int id)
         {
-            Rate rate = rates.Find(rate => rate.Id == id);
-            return View(rate);
+            return View(service.Get(id));
         }
 
         [HttpPost]
         public IActionResult Edit(int id, string name, int rating, string description)
         {
-            Rate rate = rates.Find(rate => rate.Id == id);
-            rate.Name = name;
-            rate.Rating = rating;
-            rate.Description = description;
+            service.Edit(id, name, rating, description);
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Add()
         {
-            return View(rates);
+            return View();
         }
         [HttpPost]
         public IActionResult Add(string name,int rating, string description)
         {
-            int id = rates.Max(x => x.Id)+1;
-            rates.Add(new Rate() { Rating = rating, Description = description, Name = name, Id = id});
+            service.Create(name,rating,description);
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Delete(int id)
         {
-            Rate rate = rates.Find(rate => rate.Id == id);
-            return View(rate);
+            return View(service.Get(id));
+            
         }
         [HttpPost]
         [ActionName("Delete")]
         public IActionResult DeleteRate(int id)
         {
-            Rate rate = rates.Find(rate => rate.Id == id);
-            if (rate != null)
-            {
-                rates.Remove(rate); 
-            }
+            service.Delete(id);
             return RedirectToAction(nameof(Index));
         }
     }
