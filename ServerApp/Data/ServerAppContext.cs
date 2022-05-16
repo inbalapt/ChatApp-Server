@@ -15,5 +15,7 @@ namespace ServerApp.Data
         }
 
         public DbSet<ServerApp.Models.Rate>? Rate { get; set; }
+
+        public DbSet<ServerApp.Models.Contact>? Contact { get; set; }
     }
 }
