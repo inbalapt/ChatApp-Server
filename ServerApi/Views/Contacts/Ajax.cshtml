@@ -1,0 +1,11 @@
+﻿@model IEnumerable<ServerApi.Models.Contacts>
+
+@{
+    ViewData["Id"] = "1";
+}
+
+<button onclick="getAll()">getAll</button>
+
+@section Scripts{
+    <script src="~/js/rest.js"></script>
+}
