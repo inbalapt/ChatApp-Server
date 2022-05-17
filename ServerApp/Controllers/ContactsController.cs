@@ -10,7 +10,9 @@ using ServerApp.Models;
 
 namespace ServerApp.Controllers
 {
-    public class ContactsController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ContactsController : Controller 
     {
         private readonly ServerAppContext _context;
 
@@ -20,77 +22,83 @@ namespace ServerApp.Controllers
         }
 
         // GET: Contacts
+        [HttpGet]
         public async Task<IActionResult> Index()
-        {
-              return _context.Contact != null ? 
-                          View(await _context.Contact.ToListAsync()) :
-                          Problem("Entity set 'ServerAppContext.Contact'  is null.");
+        { 
+            var contacts = await _context.Contacts.ToListAsync();
+            if(contacts != null)
+            {
+                return Json(await _context.Contacts.ToListAsync());
+            }
+            return BadRequest();
+
         }
 
         // GET: Contacts/Details/5
+        [HttpGet("{id}")]
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null || _context.Contact == null)
+            if (id == null || _context.Contacts == null)
             {
                 return NotFound();
             }
 
-            var contact = await _context.Contact
+            var contacts = await _context.Contacts
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (contact == null)
+            if (contacts == null)
             {
                 return NotFound();
             }
 
-            return View(contact);
+            return Json(contacts);
         }
 
         // GET: Contacts/Create
-        public IActionResult Create()
+       /* public IActionResult Create()
         {
             return View();
-        }
+        }*/
 
         // POST: Contacts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Server,Last,LastDate")] Contact contact)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(contact);
+                _context.Add(contacts);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Created(String.Format("api/Contacts/{0}", contacts.Id), contacts);
+                //return RedirectToAction(nameof(Index));
             }
-            return View(contact);
+            return BadRequest();
         }
 
         // GET: Contacts/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        /*public async Task<IActionResult> Edit(string id)
         {
-            if (id == null || _context.Contact == null)
+            if (id == null || _context.Contacts == null)
             {
                 return NotFound();
             }
 
-            var contact = await _context.Contact.FindAsync(id);
-            if (contact == null)
+            var contacts = await _context.Contacts.FindAsync(id);
+            if (contacts == null)
             {
                 return NotFound();
             }
-            return View(contact);
-        }
+            return View(contacts);
+        }*/
 
         // POST: Contacts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Server,Last,LastDate")] Contact contact)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
         {
-            if (id != contact.Id)
+            if (id != contacts.Id)
             {
                 return NotFound();
             }
@@ -99,12 +107,13 @@ namespace ServerApp.Controllers
             {
                 try
                 {
-                    _context.Update(contact);
+                    contacts.Id = id;
+                    _context.Update(contacts);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContactExists(contact.Id))
+                    if (!ContactsExists(contacts.Id))
                     {
                         return NotFound();
                     }
@@ -113,51 +122,51 @@ namespace ServerApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return NoContent();
             }
-            return View(contact);
+            return BadRequest();
         }
 
         // GET: Contacts/Delete/5
+       /* [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null || _context.Contact == null)
+            if (id == null || _context.Contacts == null)
             {
                 return NotFound();
             }
 
-            var contact = await _context.Contact
+            var contacts = await _context.Contacts
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (contact == null)
+            if (contacts == null)
             {
                 return NotFound();
             }
 
-            return View(contact);
-        }
+            return View(contacts);
+        }*/
 
         // POST: Contacts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+       [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Contact == null)
+            if (_context.Contacts == null)
             {
-                return Problem("Entity set 'ServerAppContext.Contact'  is null.");
+                return Problem("Entity set 'ServerAppContext.Contacts'  is null.");
             }
-            var contact = await _context.Contact.FindAsync(id);
-            if (contact != null)
+            var contacts = await _context.Contacts.FindAsync(id);
+            if (contacts != null)
             {
-                _context.Contact.Remove(contact);
+                _context.Contacts.Remove(contacts);
             }
-            
+
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return NoContent();
         }
 
-        private bool ContactExists(string id)
+        private bool ContactsExists(string id)
         {
-          return (_context.Contact?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Contacts?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

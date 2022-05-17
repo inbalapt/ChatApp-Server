@@ -2,9 +2,9 @@
 
 namespace ServerApp.Models
 {
-    public class Contact
+    public class Contacts
     {
-        [Display(Name ="Id")]
+        [Display(Name = "Id")]
         public string Id { get; set; }
 
         [Display(Name = "Name")]

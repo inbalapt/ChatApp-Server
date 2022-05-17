@@ -21,11 +21,11 @@ namespace ServerApp.Models
 
         [Required]
         [Display(Name = "From")]
-        public Contact From { get; set; }
+        public Contacts From { get; set; }
 
         [Required]
         [Display(Name = "To")]
-        public Contact To { get; set; } 
+        public Contacts To { get; set; } 
 
 
 
