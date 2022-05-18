@@ -10,7 +10,7 @@ namespace ServerApp.Services
               Chats=new List<Chats>{
                     new Chats()
                     {
-                        Id = "5", Messages=new List<Messages>()
+                        Id = "amit", Messages=new List<Messages>()
                         {
                             new Messages(){
                                 Id=1, Content="hi", Created="14/7", Sent=true},
@@ -32,7 +32,7 @@ namespace ServerApp.Services
               Contacts = new List<Contacts>()
               {
                   new Contacts(){Id="amit", Name="amiiiiit", Last="what?", LastDate="14/3", Server="" },
-                   new Contacts(){Id="noale10", Name="amiiiiit", Last="what?", LastDate="14/3", Server="" }
+                   new Contacts(){Id="noale10", Name="noah", Last="how?", LastDate="14/3", Server="" }
                }
             }
         };
