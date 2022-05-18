@@ -91,6 +91,30 @@ namespace ServerApp.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet("{id}/messages")]
+        //[Route("{id}/messages")]
+        public IActionResult /*IEnumerable<Messages>*/ GetByIDMessages(string id)
+        {
+            List<Chats> chats = _uservice.GetMessages();
+            List<Messages> messages = null;
+            foreach (Chats chat in chats)
+            {
+                if (chat.Id == id)
+                {
+                    messages = chat.Messages;
+                }
+            }
+            if (messages != null)
+            {
+                return Ok(messages);
+            }
+            
+            return BadRequest();
+        }
+
+
+
         // GET: Contacts/Edit/5
         /*public async Task<IActionResult> Edit(string id)
         {
