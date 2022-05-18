@@ -4,6 +4,7 @@ namespace ServerApi.Models
 {
     public class User
     {
+        [Key]
         [Display(Name = "Id")]
         public string Id { get; set; }
 
@@ -11,21 +12,15 @@ namespace ServerApi.Models
         [Required]
         public string Name { get; set; }
 
+        public string Password { get; set; }
+
         [Display(Name = "Server")]
         [Required]
         public string Server { get; set; }
 
-
-
-        [Display(Name = "last")]
-        [Required]
-        public string last { get; set; }
-
-
-        [Display(Name = "lastdate")]
-        [Required]
-        public string lastdate { get; set; }
-
         public List<Contacts> Contacts { get; set; }
+
+        public List<Chats> Chats { get; set; }
+
     }
 }
