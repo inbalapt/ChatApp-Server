@@ -24,22 +24,21 @@ namespace ServerApp.Controllers
         [HttpGet]
         public IEnumerable<Contacts> Index()
         {
-            _uservice.GetAll()
-            return ;
+            return _uservice.GetContacts();
         }
 
         // GET: Contacts/Details/5
         [HttpGet("{id}")]
         public Contacts Details(string id)
         {
-            return _contacts.Where(x => x.Id == id).FirstOrDefault();
+            return _uservice.GetContacts().Where(x => x.Id == id).FirstOrDefault();
         }
 
 
         [HttpPost]
         public void Create([Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
         {
-            _contacts.Add(contacts);
+            _uservice.GetContacts().Add(contacts);
         }
 
 
@@ -48,7 +47,7 @@ namespace ServerApp.Controllers
         [HttpPut("{id}")]
         public void Edit(string id, [Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
         {
-            foreach (var contact in _contacts)
+            foreach (var contact in _uservice.GetContacts())
             {
                 if (contact.Id == id)
                 {
@@ -63,11 +62,11 @@ namespace ServerApp.Controllers
         [HttpDelete("{id}")]
         public void Delete(string id)
         {
-            foreach (var contact in _contacts)
+            foreach (var contact in _uservice.GetContacts())
             {
                 if (contact.Id == id)
                 {
-                    _contacts.Remove(contact);
+                    _uservice.GetContacts().Remove(contact);
                 }
             }
         }
@@ -161,7 +160,7 @@ namespace ServerApp.Controllers
 
         private bool ContactsExists(string id)
         {
-            return (_contacts?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_uservice.GetContacts()?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
