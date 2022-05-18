@@ -15,19 +15,30 @@ namespace ServerApi.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private static List<Contacts> _users = new List<User>() { new Contacts(){Id = "1", Name= "inbal", Server="local"},
-                                          new Contacts(){Id = "2", Name= "Noa", Server="local"} };
-
-
-        /*public IActionResult Ajax()
+        private List<User> _users = new List<User>()
         {
-            return View();
-        }*/
+            new User(){Id="buli", Name="inbal", Server="local", Contacts=new List<Contacts>(){new Contacts()
+            {
+                Id="Noa", Name="noah", Server="local", MessagesList=new List<Messages>()
+                {
+                    new Messages()
+                    {
+                        Content="hi", Id=181, Created="18/4", Sent=true
+                    },
+                    new Messages()
+                    {
+                        Content="how you doin", Id=182, Created="18/4", Sent=false
+                    }
+                }
+            }
+            }}
+        };
+
         // GET: Contacts
         [HttpGet]
         public IEnumerable<Contacts> Index()
         {
-            return _contacts;
+            return _users[0].Contacts;
 
         }
 
@@ -35,11 +46,11 @@ namespace ServerApi.Controllers
         [HttpGet("{id}")]
         public Contacts Details(string id)
         {
-            return _contacts.Where(x => x.Id == id).FirstOrDefault();
+            return new Contacts() { Id="1",Name="inbal", Server="local"};
         }
 
 
-        [HttpPost]
+        /*[HttpPost]
         public void Create([Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
         {
             _contacts.Add(contacts);

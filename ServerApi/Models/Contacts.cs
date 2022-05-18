@@ -15,7 +15,7 @@ namespace ServerApi.Models
         [Required]
         public string Server { get; set; }
 
-        public List<Message> messages { }
+        public List<Messages> MessagesList { get; set; }
 
         /*[Display(Name = "Last")]
         public string Last { get; set; }
