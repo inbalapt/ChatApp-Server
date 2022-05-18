@@ -71,6 +71,7 @@ namespace ServerApp.Controllers
             }
         }
 
+        // GET: Contacts/:id/messages 
         [HttpGet("{id}/messages")]
         //[Route("{id}/messages")]
         public IActionResult /*IEnumerable<Messages>*/ GetByIDMessages(string id)
@@ -92,7 +93,152 @@ namespace ServerApp.Controllers
             return BadRequest();
         }
 
+        // POST: Contacts/:id/messages 
+        [HttpPost("{id}/messages")]
+        //[Route("{id}/messages")]
+        public IActionResult /*IEnumerable<Messages>*/ PostByIDMessages(string id ,[Bind("Id,Content,Created,Sent")] Messages message)
+        {
+            List<Chats> chats = _uservice.GetMessages();
+            List<Messages> messages = null;
+            foreach (Chats chat in chats)
+            {
+                if (chat.Id == id)
+                {
+                    chat.Messages.Add(message);
+                }
+            }
+            if (messages != null)
+            {
+                return Ok(messages);
+            }
 
+            return BadRequest();
+        }
+
+
+        // GET: Contacts/:id/messages/:id2
+        [HttpGet("{id}/messages/{idmessage}")]
+        //[Route("{id}/messages")]
+        public IActionResult /*IEnumerable<Messages>*/ GetMessage(string id, int idmessage)
+        {
+            List<Chats> chats = _uservice.GetMessages();
+            List<Messages> messages = null;
+            Messages message1 = null;
+            foreach (Chats chat in chats)
+            {
+                if (chat.Id == id)
+                {
+                    messages = chat.Messages;
+                }
+            }
+            if (messages == null)
+            {
+                return BadRequest();
+            }
+
+            
+            foreach (Messages message in messages)
+            {
+                if (message.Id == idmessage)
+                {
+                    message1 = message;
+                }
+            }
+
+            if (message1 != null)
+            {
+                return Ok(message1);
+            }
+
+            return BadRequest();
+
+        }
+
+
+        // PUT: Contacts/:id/messages/:id2
+        [HttpPut("{id}/messages/{idmessage}")]
+        //[Route("{id}/messages")]
+        public IActionResult /*IEnumerable<Messages>*/ PutMessage(string id, int idmessage, [Bind("Id,Content,Created,Sent")] Messages message)
+        {
+            List<Chats> chats = _uservice.GetMessages();
+            List<Messages> messages = null;
+            int flag = 0;
+            foreach (Chats chat in chats)
+            {
+                if (chat.Id == id)
+                {
+                    messages = chat.Messages;
+                }
+            }
+            if (messages == null)
+            {
+                return BadRequest();
+            }
+
+
+            foreach (Messages mes in messages)
+            {
+                if (mes.Id == idmessage)
+                {
+                    mes.Sent = message.Sent;
+                    mes.Id = message.Id;
+                    mes.Created = message.Created;
+                    mes.Content = message.Content;
+                    flag = 1;
+                }
+            }
+
+            if (flag == 0)
+            {
+                return BadRequest();
+            }
+            
+            return Ok();
+
+           
+
+        }
+
+        // DELETE: Contacts/:id/messages/:id2
+        [HttpDelete("{id}/messages/{idmessage}")]
+        public IActionResult /*IEnumerable<Messages>*/ DeleteMessage(string id, int idmessage, [Bind("Id,Content,Created,Sent")] Messages message)
+        {
+            List<Chats> chats = _uservice.GetMessages();
+            List<Messages> messages = null;
+            
+            int flag = 0;
+
+            foreach (Chats chat in chats)
+            {
+                if (chat.Id == id)
+                {
+                    messages = chat.Messages;
+                }
+            }
+            if (messages == null)
+            {
+                return BadRequest();
+            }
+
+
+            foreach (Messages mes in messages)
+            {
+                if (mes.Id == idmessage)
+                {
+                    messages.Remove(mes);
+                    flag = 1;
+
+                }
+            }
+
+            if (flag == 0)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+
+        }
 
         // GET: Contacts/Edit/5
         /*public async Task<IActionResult> Edit(string id)
