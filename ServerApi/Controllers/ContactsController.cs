@@ -20,39 +20,12 @@ namespace ServerApp.Controllers
             _uservice = new UserService();
         }
 
-       /* private static List<Contacts> _contacts = new List<Contacts>() { new Contacts(){Id = "1", Name= "inbal", Server="local"},
-                                          new Contacts(){Id = "2", Name= "Noa", Server="local"} };*/
-
-        /*
-        private static Dictionary<string, List<User>> _usersDict = new Dictionary<string, List<User>>()
-        { {"inbal33", new List<User>()
-        { new User(){Id = "noale10" , Name = "Noa", Server = "" , last = "" , lastdate = "" },
-          new User(){Id = "yoval99" , Name = "yoval", Server = "" , last = "" , lastdate = "" },
-          new User(){Id = "harel21" , Name = "harel", Server = "" , last = "" , lastdate = "" },
-          new User(){Id = "tomer50" , Name = "tomer", Server = "" , last = "" , lastdate = "" }}},
-
-        {"harel21", new List<User>()
-        { new User(){Id = "inbal33" , Name = "Noa", Server = "" , last = "" , lastdate = "" },
-          new User(){Id = "yoval99" , Name = "yoval", Server = "" , last = "" , lastdate = "" },
-          new User(){Id = "yair39" , Name = "harel", Server = "" , last = "" , lastdate = "" },
-          new User(){Id = "tomer50" , Name = "tomer", Server = "" , last = "" , lastdate = "" }}},
-
-
-        {"yoval99", new List<User>()
-        { new User(){Id = "inbal33" , Name = "Noa", Server = "" , last = "" , lastdate = "" },
-          new User(){Id = "harel21" , Name = "yoval", Server = "" , last = "" , lastdate = "" },
-          new User(){Id = "noale10" , Name = "harel", Server = "" , last = "" , lastdate = "" },
-          new User(){Id = "tomer50" , Name = "tomer", Server = "" , last = "" , lastdate = "" }}}
-
-        };
-        */
-
         // GET: Contacts
         [HttpGet]
         public IEnumerable<Contacts> Index()
         {
-            //return _usersDict.
-            return _contacts;
+            _uservice.GetAll()
+            return ;
         }
 
         // GET: Contacts/Details/5
