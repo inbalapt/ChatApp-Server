@@ -29,46 +29,67 @@ namespace ServerApp.Controllers
 
         // GET: Contacts/Details/5
         [HttpGet("{id}")]
-        public Contacts Details(string id)
+        public IActionResult /*Contacts*/ Details(string id)
         {
-            return _uservice.GetContacts().Where(x => x.Id  == id).FirstOrDefault();
+            if (!ContactsExists(id))
+            {
+                return BadRequest();
+            }
+            return Ok(_uservice.GetContacts().Where(x => x.Id  == id).FirstOrDefault());
         }
 
 
         [HttpPost]
-        public void Create([Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
+        public IActionResult Create([Bind("Id,Name,Server")] Contacts contacts)
         {
+            if (ContactsExists(contacts.Id))
+            {
+                return BadRequest();
+            }
+            contacts.LastDate = null;
+            contacts.Last = null;
             _uservice.GetContacts().Add(contacts);
+            return Ok();
         }
 
 
 
         // GET: Contacts/Details/5
         [HttpPut("{id}")]
-        public void Edit(string id, [Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
+        public IActionResult Edit(string id, [Bind("Name,Server")] Contacts contacts)
         {
+            if (!ContactsExists(id))
+            {
+                return BadRequest();
+            }
             foreach (var contact in _uservice.GetContacts())
             {
                 if (contact.Id == id)
                 {
                     contact.Name = contacts.Name;
                     contact.Server = contacts.Server;
-                    contact.Last = contacts.Last;
-                    contact.LastDate = contacts.LastDate;
+                    return Ok();
                 }
             }
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public IActionResult Delete(string id)
         {
+            if (!ContactsExists(id))
+            {
+                return BadRequest();
+            }
             foreach (var contact in _uservice.GetContacts())
             {
                 if (contact.Id == id)
                 {
                     _uservice.GetContacts().Remove(contact);
+                    return Ok();
                 }
             }
+            return BadRequest();
         }
 
         // GET: Contacts/:id/messages 

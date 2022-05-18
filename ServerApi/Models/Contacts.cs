@@ -5,7 +5,7 @@ namespace ServerApi.Models
     public class Contacts
     {
         [Display(Name = "Id")]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [Display(Name = "Name")]
         [Required]
@@ -17,10 +17,10 @@ namespace ServerApi.Models
 
 
         [Display(Name = "Last")]
-        public string Last { get; set; }
+        public string? Last { get; set; }
 
         [Display(Name = "LastDate")]
-        public string LastDate { get; set; }
+        public string? LastDate { get; set; }
 
 
     }
