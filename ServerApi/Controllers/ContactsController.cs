@@ -40,12 +40,14 @@ namespace ServerApp.Controllers
 
 
         [HttpPost]
-        public IActionResult Create([Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
+        public IActionResult Create([Bind("Id,Name,Server")] Contacts contacts)
         {
             if (ContactsExists(contacts.Id))
             {
                 return BadRequest();
             }
+            contacts.LastDate = null;
+            contacts.Last = null;
             _uservice.GetContacts().Add(contacts);
             return Ok();
         }
@@ -54,9 +56,9 @@ namespace ServerApp.Controllers
 
         // GET: Contacts/Details/5
         [HttpPut("{id}")]
-        public IActionResult Edit(string id, [Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
+        public IActionResult Edit(string id, [Bind("Name,Server")] Contacts contacts)
         {
-            if (!ContactsExists(contacts.Id))
+            if (!ContactsExists(id))
             {
                 return BadRequest();
             }
@@ -66,8 +68,6 @@ namespace ServerApp.Controllers
                 {
                     contact.Name = contacts.Name;
                     contact.Server = contacts.Server;
-                    contact.Last = contacts.Last;
-                    contact.LastDate = contacts.LastDate;
                     return Ok();
                 }
             }
