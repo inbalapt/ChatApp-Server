@@ -31,7 +31,7 @@ namespace ServerApp.Controllers
         [HttpGet("{id}")]
         public Contacts Details(string id)
         {
-            return _uservice.GetContacts().Where(x => x.Id == id).FirstOrDefault();
+            return _uservice.GetContacts().Where(x => x.Id  == id).FirstOrDefault();
         }
 
 
