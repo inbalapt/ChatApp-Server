@@ -5,75 +5,44 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ServerApp.Data;
-using ServerApp.Models;
+using ServerApi.Data;
+using ServerApi.Models;
 
-namespace ServerApp.Controllers
+namespace ServerApi.Controllers
 {
+
     [ApiController]
     [Route("api/[controller]")]
-    public class ContactsController : Controller 
+    public class UsersController : ControllerBase
     {
-        private readonly ServerAppContext _context;
+        private static List<Contacts> _users = new List<User>() { new Contacts(){Id = "1", Name= "inbal", Server="local"},
+                                          new Contacts(){Id = "2", Name= "Noa", Server="local"} };
 
-        public ContactsController(ServerAppContext context)
+
+        /*public IActionResult Ajax()
         {
-            _context = context;
-        }
-
+            return View();
+        }*/
         // GET: Contacts
         [HttpGet]
-        public async Task<IActionResult> Index()
-        { 
-            var contacts = await _context.Contacts.ToListAsync();
-            if(contacts != null)
-            {
-                return Json(await _context.Contacts.ToListAsync());
-            }
-            return BadRequest();
+        public IEnumerable<Contacts> Index()
+        {
+            return _contacts;
 
         }
 
         // GET: Contacts/Details/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Details(string id)
+        public Contacts Details(string id)
         {
-            if (id == null || _context.Contacts == null)
-            {
-                return NotFound();
-            }
-
-            var contacts = await _context.Contacts
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (contacts == null)
-            {
-                return NotFound();
-            }
-
-            return Json(contacts);
+            return _contacts.Where(x => x.Id == id).FirstOrDefault();
         }
 
-        // GET: Contacts/Create
-       /* public IActionResult Create()
-        {
-            return View();
-        }*/
 
-        // POST: Contacts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
+        public void Create([Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(contacts);
-                await _context.SaveChangesAsync();
-                return Created(String.Format("api/Contacts/{0}", contacts.Id), contacts);
-                //return RedirectToAction(nameof(Index));
-            }
-            return BadRequest();
+            _contacts.Add(contacts);
         }
 
         // GET: Contacts/Edit/5
@@ -95,7 +64,7 @@ namespace ServerApp.Controllers
         // POST: Contacts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPut("{id}")]
+        /*[HttpPut("{id}")]
         public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
         {
             if (id != contacts.Id)
@@ -125,29 +94,29 @@ namespace ServerApp.Controllers
                 return NoContent();
             }
             return BadRequest();
-        }
-
-        // GET: Contacts/Delete/5
-       /* [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
-        {
-            if (id == null || _context.Contacts == null)
-            {
-                return NotFound();
-            }
-
-            var contacts = await _context.Contacts
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (contacts == null)
-            {
-                return NotFound();
-            }
-
-            return View(contacts);
         }*/
 
+        // GET: Contacts/Delete/5
+        /* [HttpDelete("{id}")]
+         public async Task<IActionResult> Delete(string id)
+         {
+             if (id == null || _context.Contacts == null)
+             {
+                 return NotFound();
+             }
+
+             var contacts = await _context.Contacts
+                 .FirstOrDefaultAsync(m => m.Id == id);
+             if (contacts == null)
+             {
+                 return NotFound();
+             }
+
+             return View(contacts);
+         }*/
+
         // POST: Contacts/Delete/5
-       [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.Contacts == null)
@@ -167,6 +136,6 @@ namespace ServerApp.Controllers
         private bool ContactsExists(string id)
         {
             return (_context.Contacts?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        }*/
     }
 }
