@@ -17,10 +17,10 @@ namespace ServerApi.Models
 
 
         [Display(Name = "Last")]
-        public string Last { get; set; }
+        public string last { get; set; }
 
         [Display(Name = "LastDate")]
-        public int LastDate { get; set; }
+        public string lastdate { get; set; }
 
 
     }
