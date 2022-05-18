@@ -20,7 +20,7 @@ namespace ServerApi.Models
         public string Last { get; set; }
 
         [Display(Name = "LastDate")]
-        public int LastDate { get; set; }
+        public string LastDate { get; set; }
 
 
     }

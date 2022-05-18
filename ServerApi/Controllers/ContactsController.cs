@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ServerApi.Models;
+using ServerApp.Services;
 
 namespace ServerApp.Controllers
 {
@@ -12,8 +13,15 @@ namespace ServerApp.Controllers
     [Route("api/[controller]")]
     public class ContactsController : ControllerBase
     {
-        private static List<Contacts> _contacts = new List<Contacts>() { new Contacts(){Id = "1", Name= "inbal", Server="local"},
-                                          new Contacts(){Id = "2", Name= "Noa", Server="local"} };
+        private UserService _uservice;
+
+        public ContactsController()
+        {
+            _uservice = new UserService();
+        }
+
+       /* private static List<Contacts> _contacts = new List<Contacts>() { new Contacts(){Id = "1", Name= "inbal", Server="local"},
+                                          new Contacts(){Id = "2", Name= "Noa", Server="local"} };*/
 
         /*
         private static Dictionary<string, List<User>> _usersDict = new Dictionary<string, List<User>>()
