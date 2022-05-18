@@ -53,8 +53,8 @@ namespace ServerApp.Controllers
                 {
                     contact.Name = contacts.Name;
                     contact.Server = contacts.Server;
-                    contact.Last = contacts.Last;
-                    contact.LastDate = contacts.LastDate;
+                    contact.last = contacts.Last;
+                    contact.LastDate = contacts.lastdate;
                 }
             }
         }
