@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+
 using ServerApi.Data;
 using ServerApi.Models;
 
@@ -15,6 +15,7 @@ namespace ServerApi.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
+        
         private List<User> _users = new List<User>()
         {
             new User(){Id="buli", Name="inbal", Server="local", Contacts=new List<Contacts>(){new Contacts()
@@ -33,6 +34,33 @@ namespace ServerApi.Controllers
             }
             }}
         };
+
+        
+        /*
+        private Dictionary<string, List<User>> _usersDict = new Dictionary<string, List<User>>()
+        { {"inbal33", new List<User>()
+        { new User(){Id = "noale10" , Name = "Noa", Server = "" , last = "" , lastdate = "" },
+          new User(){Id = "yoval99" , Name = "yoval", Server = "" , last = "" , lastdate = "" },
+          new User(){Id = "harel21" , Name = "harel", Server = "" , last = "" , lastdate = "" },
+          new User(){Id = "tomer50" , Name = "tomer", Server = "" , last = "" , lastdate = "" }}},
+
+        {"harel21", new List<User>()
+        { new User(){Id = "inbal33" , Name = "Noa", Server = "" , last = "" , lastdate = "" },
+          new User(){Id = "yoval99" , Name = "yoval", Server = "" , last = "" , lastdate = "" },
+          new User(){Id = "yair39" , Name = "harel", Server = "" , last = "" , lastdate = "" },
+          new User(){Id = "tomer50" , Name = "tomer", Server = "" , last = "" , lastdate = "" }}},
+
+
+        {"yoval99", new List<User>()
+        { new User(){Id = "inbal33" , Name = "Noa", Server = "" , last = "" , lastdate = "" },
+          new User(){Id = "harel21" , Name = "yoval", Server = "" , last = "" , lastdate = "" },
+          new User(){Id = "noale10" , Name = "harel", Server = "" , last = "" , lastdate = "" },
+          new User(){Id = "tomer50" , Name = "tomer", Server = "" , last = "" , lastdate = "" }}}
+
+        };
+        */
+        
+
 
         // GET: Contacts
         [HttpGet]

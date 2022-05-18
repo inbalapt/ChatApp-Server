@@ -15,7 +15,17 @@ namespace ServerApi.Models
         [Required]
         public string Server { get; set; }
 
-        
+
+
+        [Display(Name = "last")]
+        [Required]
+        public string last { get; set; }
+
+
+        [Display(Name = "lastdate")]
+        [Required]
+        public string lastdate { get; set; }
+
         public List<Contacts> Contacts { get; set; }
     }
 }
