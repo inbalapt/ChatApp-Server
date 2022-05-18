@@ -20,41 +20,12 @@ namespace ServerApp.Controllers
             _uservice = new UserService();
         }
 
-       /* private static List<Contacts> _contacts = new List<Contacts>() { new Contacts(){Id = "1", Name= "inbal", Server="local"},
-                                          new Contacts(){Id = "2", Name= "Noa", Server="local"} };*/
-
-        
-        private static Dictionary<string, List<Contacts>> _usersDict = new Dictionary<string, List<Contacts>>()
-        { {"inbal33", new List<Contacts>()
-        { new Contacts(){Id = "noale10" , Name = "Noa", Server = "" , last = "" , lastdate = "" },
-          new Contacts(){Id = "yoval99" , Name = "yoval", Server = "" , last = "" , lastdate = "" },
-          new Contacts(){Id = "harel21" , Name = "harel", Server = "" , last = "" , lastdate = "" },
-          new Contacts(){Id = "tomer50" , Name = "tomer", Server = "" , last = "" , lastdate = "" }}},
-
-        {"harel21", new List<Contacts>()
-        { new Contacts(){Id = "inbal33" , Name = "Noa", Server = "" , last = "" , lastdate = "" },
-          new Contacts(){Id = "yoval99" , Name = "yoval", Server = "" , last = "" , lastdate = "" },
-          new Contacts(){Id = "yair39" , Name = "harel", Server = "" , last = "" , lastdate = "" },
-          new Contacts(){Id = "tomer50" , Name = "tomer", Server = "" , last = "" , lastdate = "" }}},
-
-
-        {"yoval99", new List<Contacts>()
-        { new Contacts(){Id = "inbal33" , Name = "Noa", Server = "" , last = "" , lastdate = "" },
-          new Contacts(){Id = "harel21" , Name = "yoval", Server = "" , last = "" , lastdate = "" },
-          new Contacts(){Id = "noale10" , Name = "harel", Server = "" , last = "" , lastdate = "" },
-          new Contacts(){Id = "tomer50" , Name = "tomer", Server = "" , last = "" , lastdate = "" }}}
-
-        };
-        
-
         // GET: Contacts
         [HttpGet]
         public IEnumerable<Contacts> Index()
         {
-            //List<User> users = _uservice.GetAll();
-            //foreach (User user in users) ;
-            //return _usersDict.
-            return _uservice.GetAll();
+            _uservice.GetAll()
+            return ;
         }
 
         // GET: Contacts/Details/5

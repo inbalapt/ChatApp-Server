@@ -62,7 +62,31 @@ namespace ServerApp.Services
         };*/
         public List<User> GetAll()
         {
-          return users;
+            return users;
+        }
+
+        public List<Contacts> GetContacts()
+        {
+            foreach (var user in users)
+            {
+                if (user.Id == connected)
+                {
+                    return user.Contacts;
+                }
+            }
+            return null;
+        }
+
+        public List<Chats> GetMessages()
+        {
+            foreach (var user in users)
+            {
+                if (user.Id == connected)
+                {
+                    return user.Chats;
+                }
+            }
+            return null;
         }
 
         public string connected = "inbal";
