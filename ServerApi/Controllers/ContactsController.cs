@@ -51,14 +51,17 @@ namespace ServerApp.Controllers
         [HttpGet]
         public IEnumerable<Contacts> Index()
         {
+            //List<User> users = _uservice.GetAll();
+            //foreach (User user in users) ;
             //return _usersDict.
-            return _contacts;
+            return _uservice.GetAll();
         }
 
         // GET: Contacts/Details/5
         [HttpGet("{id}")]
         public Contacts Details(string id)
         {
+            _uservice.GetAll();
             return _contacts.Where(x => x.Id == id).FirstOrDefault();
         }
 
@@ -81,8 +84,8 @@ namespace ServerApp.Controllers
                 {
                     contact.Name = contacts.Name;
                     contact.Server = contacts.Server;
-                    contact.Last = contacts.Last;
-                    contact.LastDate = contacts.LastDate;
+                    contact.last = contacts.Last;
+                    contact.LastDate = contacts.lastdate;
                 }
             }
         }
