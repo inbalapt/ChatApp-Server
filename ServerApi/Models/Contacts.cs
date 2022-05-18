@@ -15,13 +15,12 @@ namespace ServerApi.Models
         [Required]
         public string Server { get; set; }
 
-        public List<Messages> MessagesList { get; set; }
 
-        /*[Display(Name = "Last")]
+        [Display(Name = "Last")]
         public string Last { get; set; }
 
         [Display(Name = "LastDate")]
-        public int LastDate { get; set; }*/
+        public int LastDate { get; set; }
 
 
     }

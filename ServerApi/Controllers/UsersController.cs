@@ -19,17 +19,7 @@ namespace ServerApi.Controllers
         {
             new User(){Id="buli", Name="inbal", Server="local", Contacts=new List<Contacts>(){new Contacts()
             {
-                Id="Noa", Name="noah", Server="local", MessagesList=new List<Messages>()
-                {
-                    new Messages()
-                    {
-                        Content="hi", Id=181, Created="18/4", Sent=true
-                    },
-                    new Messages()
-                    {
-                        Content="how you doin", Id=182, Created="18/4", Sent=false
-                    }
-                }
+               
             }
             }}
         };

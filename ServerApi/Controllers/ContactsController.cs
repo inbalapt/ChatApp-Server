@@ -16,16 +16,11 @@ namespace ServerApp.Controllers
                                           new Contacts(){Id = "2", Name= "Noa", Server="local"} };
 
 
-        /*public IActionResult Ajax()
-        {
-            return View();
-        }*/
         // GET: Contacts
         [HttpGet]
         public IEnumerable<Contacts> Index()
         {
             return _contacts;
-
         }
 
         // GET: Contacts/Details/5
@@ -35,8 +30,6 @@ namespace ServerApp.Controllers
             return _contacts.Where(x => x.Id == id).FirstOrDefault();
         }
 
-       
-
 
         [HttpPost]
         public void Create([Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
@@ -44,6 +37,35 @@ namespace ServerApp.Controllers
             _contacts.Add(contacts);
         }
 
+
+
+        // GET: Contacts/Details/5
+        [HttpPut("{id}")]
+        public void Edit(string id, [Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
+        {
+            foreach (var contact in _contacts)
+            {
+                if (contact.Id == id)
+                {
+                    contact.Name = contacts.Name;
+                    contact.Server = contacts.Server;
+                    contact.Last = contacts.Last;
+                    contact.LastDate = contacts.LastDate;
+                }
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(string id)
+        {
+            foreach (var contact in _contacts)
+            {
+                if (contact.Id == id)
+                {
+                    _contacts.Remove(contact);
+                }
+            }
+        }
         // GET: Contacts/Edit/5
         /*public async Task<IActionResult> Edit(string id)
         {
@@ -130,11 +152,11 @@ namespace ServerApp.Controllers
 
             await _context.SaveChangesAsync();
             return NoContent();
-        }
+        }*/
 
         private bool ContactsExists(string id)
         {
-            return (_context.Contacts?.Any(e => e.Id == id)).GetValueOrDefault();
-        }*/
+            return (_contacts?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
     }
 }
