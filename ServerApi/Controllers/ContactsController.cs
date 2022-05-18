@@ -30,7 +30,9 @@ namespace ServerApp.Controllers
             return _contacts.Where(x => x.Id == id).FirstOrDefault();
         }
 
-      
+       
+
+
         [HttpPost]
         public void Create([Bind("Id,Name,Server,Last,LastDate")] Contacts contacts)
         {

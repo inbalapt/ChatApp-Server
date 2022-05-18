@@ -4,69 +4,54 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ServerApp.Data;
-using ServerApp.Models;
+using ServerApi.Models;
 
-namespace ServerApp.Controllers
+
+namespace ServerApi.Controllers
 {
-    public class MessagesController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class MessagesController : ControllerBase
     {
-        private readonly ServerAppContext _context;
-
-        public MessagesController(ServerAppContext context)
-        {
-            _context = context;
-        }
-
+        private static List<Messages> _messages = new List<Messages>() { new Messages() {Id = 1, Content = "hi", Created = "2022-04-24T19:46:09:7077994", Sent=false},
+            new Messages(){Id = 1, Content = "hi", Created = "2022-04-24T19:47:09:7077994", Sent=true } };     
+                                       
         // GET: Messages
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IEnumerable<Messages> Index()
         {
-              return _context.Message != null ? 
-                          View(await _context.Message.ToListAsync()) :
-                          Problem("Entity set 'ServerAppContext.Message'  is null.");
+           
+            return _messages;
         }
 
         // GET: Messages/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet("{id}")]
+        public Messages Details(int? id)
         {
-            if (id == null || _context.Message == null)
-            {
-                return NotFound();
-            }
-
-            var message = await _context.Message
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (message == null)
-            {
-                return NotFound();
-            }
-
-            return View(message);
+            return _messages.Where(x => x.Id == id).FirstOrDefault();
         }
 
-        // GET: Messages/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
 
         // POST: Messages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Content,Server,Created")] Message message)
+        public void Create([Bind("Id,Content,Server,Created")] Messages message)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(message);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(message);
+            _messages.Add(message);
         }
 
+        /*
+        [HttpPost]
+        public void Delete(int id)
+        {
+            //_messages.Remove(Details(id));
+            _messages.Remove(_messages.Where(x => x.Id == id).FirstOrDefault());
+        }
+        */
+
+        /*
         // GET: Messages/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -113,9 +98,9 @@ namespace ServerApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return NoContent();
             }
-            return View(message);
+            return BadRequest();
         }
 
         // GET: Messages/Delete/5
@@ -159,5 +144,8 @@ namespace ServerApp.Controllers
         {
           return (_context.Message?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        */
+
     }
+        
 }
