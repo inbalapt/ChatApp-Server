@@ -2,7 +2,7 @@
 
 namespace ServerApi.Models
 {
-    public class Contacts
+    public class User
     {
         [Display(Name = "Id")]
         public string Id { get; set; }
@@ -15,14 +15,7 @@ namespace ServerApi.Models
         [Required]
         public string Server { get; set; }
 
-        public List<Message> messages { }
-
-        /*[Display(Name = "Last")]
-        public string Last { get; set; }
-
-        [Display(Name = "LastDate")]
-        public int LastDate { get; set; }*/
-
-
+        
+        public List<Contacts> Contacts { get; set; }
     }
 }
