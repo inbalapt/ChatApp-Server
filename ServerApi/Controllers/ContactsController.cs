@@ -21,48 +21,48 @@ namespace ServerApp.Controllers
         }
 
         // GET: Contacts
-        [HttpGet]
-        public IEnumerable<Contacts> Index()
+        [HttpGet("{connected}")]
+        public IEnumerable<Contacts> Index(string connected)
         {
-            return _uservice.GetContacts();
+            return _uservice.GetContacts(connected);
         }
 
         // GET: Contacts/Details/5
-        [HttpGet("{id}")]
-        public IActionResult /*Contacts*/ Details(string id)
+        [HttpGet("{connected}/{id}")]
+        public IActionResult /*Contacts*/ Details(string connected,string id)
         {
-            if (!ContactsExists(id))
+            if (!ContactsExists(connected,id))
             {
                 return BadRequest();
             }
-            return Ok(_uservice.GetContacts().Where(x => x.Id  == id).FirstOrDefault());
+            return Ok(_uservice.GetContacts(connected).Where(x => x.Id  == id).FirstOrDefault());
         }
 
 
-        [HttpPost]
-        public IActionResult Create([Bind("Id,Name,Server")] Contacts contacts)
+        [HttpPost("{connected}")]
+        public IActionResult Create(string connected, [Bind("Id,Name,Server")] Contacts contacts)
         {
-            if (ContactsExists(contacts.Id))
+            if (ContactsExists(connected,contacts.Id))
             {
                 return BadRequest();
             }
             contacts.LastDate = null;
             contacts.Last = null;
-            _uservice.GetContacts().Add(contacts);
+            _uservice.GetContacts(connected).Add(contacts);
             return Ok();
         }
 
 
 
         // GET: Contacts/Details/5
-        [HttpPut("{id}")]
-        public IActionResult Edit(string id, [Bind("Name,Server")] Contacts contacts)
+        [HttpPut("{connected}/{id}")]
+        public IActionResult Edit(string connected, string id, [Bind("Name,Server")] Contacts contacts)
         {
-            if (!ContactsExists(id))
+            if (!ContactsExists(connected,id))
             {
                 return BadRequest();
             }
-            foreach (var contact in _uservice.GetContacts())
+            foreach (var contact in _uservice.GetContacts(connected))
             {
                 if (contact.Id == id)
                 {
@@ -74,18 +74,18 @@ namespace ServerApp.Controllers
             return BadRequest();
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        [HttpDelete("{connected}/{id}")]
+        public IActionResult Delete(string connected, string id)
         {
-            if (!ContactsExists(id))
+            if (!ContactsExists(connected, id))
             {
                 return BadRequest();
             }
-            foreach (var contact in _uservice.GetContacts())
+            foreach (var contact in _uservice.GetContacts(connected))
             {
                 if (contact.Id == id)
                 {
-                    _uservice.GetContacts().Remove(contact);
+                    _uservice.GetContacts(connected).Remove(contact);
                     return Ok();
                 }
             }
@@ -93,11 +93,11 @@ namespace ServerApp.Controllers
         }
 
         // GET: Contacts/:id/messages 
-        [HttpGet("{id}/messages")]
+        [HttpGet("{connected}/{id}/messages")]
         //[Route("{id}/messages")]
-        public IActionResult /*IEnumerable<Messages>*/ GetByIDMessages(string id)
+        public IActionResult /*IEnumerable<Messages>*/ GetByIDMessages(string connected, string id)
         {
-            List<Chats> chats = _uservice.GetMessages();
+            List<Chats> chats = _uservice.GetMessages(connected);
             List<Messages> messages = null;
             foreach (Chats chat in chats)
             {
@@ -115,11 +115,11 @@ namespace ServerApp.Controllers
         }
 
         // POST: Contacts/:id/messages 
-        [HttpPost("{id}/messages")]
+        [HttpPost("{connected}/{id}/messages")]
         //[Route("{id}/messages")]
-        public IActionResult /*IEnumerable<Messages>*/ PostByIDMessages(string id ,[Bind("Id,Content,Created,Sent")] Messages message)
+        public IActionResult /*IEnumerable<Messages>*/ PostByIDMessages(string connected, string id ,[Bind("Id,Content,Created,Sent")] Messages message)
         {
-            List<Chats> chats = _uservice.GetMessages();
+            List<Chats> chats = _uservice.GetMessages(connected);
             List<Messages> messages = null;
             foreach (Chats chat in chats)
             {
@@ -138,11 +138,11 @@ namespace ServerApp.Controllers
 
 
         // GET: Contacts/:id/messages/:id2
-        [HttpGet("{id}/messages/{idmessage}")]
+        [HttpGet("{connected}/{id}/messages/{idmessage}")]
         //[Route("{id}/messages")]
-        public IActionResult /*IEnumerable<Messages>*/ GetMessage(string id, int idmessage)
+        public IActionResult /*IEnumerable<Messages>*/ GetMessage(string connected, string id, int idmessage)
         {
-            List<Chats> chats = _uservice.GetMessages();
+            List<Chats> chats = _uservice.GetMessages(connected);
             List<Messages> messages = null;
             Messages message1 = null;
             foreach (Chats chat in chats)
@@ -177,11 +177,11 @@ namespace ServerApp.Controllers
 
 
         // PUT: Contacts/:id/messages/:id2
-        [HttpPut("{id}/messages/{idmessage}")]
+        [HttpPut("{connected}/{id}/messages/{idmessage}")]
         //[Route("{id}/messages")]
-        public IActionResult /*IEnumerable<Messages>*/ PutMessage(string id, int idmessage, [Bind("Id,Content,Created,Sent")] Messages message)
+        public IActionResult /*IEnumerable<Messages>*/ PutMessage(string connected, string id, int idmessage, [Bind("Id,Content,Created,Sent")] Messages message)
         {
-            List<Chats> chats = _uservice.GetMessages();
+            List<Chats> chats = _uservice.GetMessages(connected);
             List<Messages> messages = null;
             int flag = 0;
             foreach (Chats chat in chats)
@@ -221,10 +221,10 @@ namespace ServerApp.Controllers
         }
 
         // DELETE: Contacts/:id/messages/:id2
-        [HttpDelete("{id}/messages/{idmessage}")]
-        public IActionResult /*IEnumerable<Messages>*/ DeleteMessage(string id, int idmessage, [Bind("Id,Content,Created,Sent")] Messages message)
+        [HttpDelete("{connected}/{id}/messages/{idmessage}")]
+        public IActionResult /*IEnumerable<Messages>*/ DeleteMessage(string connected, string id, int idmessage, [Bind("Id,Content,Created,Sent")] Messages message)
         {
-            List<Chats> chats = _uservice.GetMessages();
+            List<Chats> chats = _uservice.GetMessages(connected);
             List<Messages> messages = null;
             
             int flag = 0;
@@ -349,9 +349,9 @@ namespace ServerApp.Controllers
             return NoContent();
         }*/
 
-        private bool ContactsExists(string id)
+        private bool ContactsExists(string connected, string id)
         {
-            return (_uservice.GetContacts()?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_uservice.GetContacts(connected)?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -65,7 +65,7 @@ namespace ServerApp.Services
             return users;
         }
 
-        public List<Contacts> GetContacts()
+        public List<Contacts> GetContacts(string connected)
         {
             foreach (var user in users)
             {
@@ -77,7 +77,7 @@ namespace ServerApp.Services
             return null;
         }
 
-        public List<Chats> GetMessages()
+        public List<Chats> GetMessages(string connected)
         {
             foreach (var user in users)
             {
@@ -89,6 +89,6 @@ namespace ServerApp.Services
             return null;
         }
 
-        public string connected = "inbal";
+        //public string connected = "inbal";
     }
 }
