@@ -94,7 +94,6 @@ namespace ServerApp.Controllers
 
         // GET: Contacts/:id/messages 
         [HttpGet("{id}/messages")]
-        //[Route("{id}/messages")]
         public IActionResult /*IEnumerable<Messages>*/ GetByIDMessages(string id)
         {
             List<Chats> chats = _uservice.GetMessages();
@@ -116,8 +115,7 @@ namespace ServerApp.Controllers
 
         // POST: Contacts/:id/messages 
         [HttpPost("{id}/messages")]
-        //[Route("{id}/messages")]
-        public IActionResult /*IEnumerable<Messages>*/ PostByIDMessages(string id ,[Bind("Id,Content,Created,Sent")] Messages message)
+        public IActionResult /*IEnumerable<Messages>*/ PostByIDMessages(string id ,[Bind("Content,Created,Sent")] Messages message)
         {
             List<Chats> chats = _uservice.GetMessages();
             List<Messages> messages = null;
@@ -125,6 +123,9 @@ namespace ServerApp.Controllers
             {
                 if (chat.Id == id)
                 {
+                    //messages = chat.Messages;
+                    int new_id = chat.Messages.Max(x => x.Id) + 1;
+                    message.Id = new_id;
                     chat.Messages.Add(message);
                 }
             }
@@ -139,7 +140,6 @@ namespace ServerApp.Controllers
 
         // GET: Contacts/:id/messages/:id2
         [HttpGet("{id}/messages/{idmessage}")]
-        //[Route("{id}/messages")]
         public IActionResult /*IEnumerable<Messages>*/ GetMessage(string id, int idmessage)
         {
             List<Chats> chats = _uservice.GetMessages();
@@ -178,7 +178,6 @@ namespace ServerApp.Controllers
 
         // PUT: Contacts/:id/messages/:id2
         [HttpPut("{id}/messages/{idmessage}")]
-        //[Route("{id}/messages")]
         public IActionResult /*IEnumerable<Messages>*/ PutMessage(string id, int idmessage, [Bind("Id,Content,Created,Sent")] Messages message)
         {
             List<Chats> chats = _uservice.GetMessages();
@@ -248,6 +247,7 @@ namespace ServerApp.Controllers
                 {
                     messages.Remove(mes);
                     flag = 1;
+                    return Ok();
 
                 }
             }
