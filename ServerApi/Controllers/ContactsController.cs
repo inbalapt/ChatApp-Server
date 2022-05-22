@@ -93,8 +93,8 @@ namespace ServerApp.Controllers
         }
 
         // GET: Contacts/:id/messages 
-        [HttpGet("{id}/messages")]
-        public IActionResult /*IEnumerable<Messages>*/ GetByIDMessages(string id)
+        [HttpGet("{connected}/{id}/messages")]
+        public IActionResult /*IEnumerable<Messages>*/ GetByIDMessages(string connected,string id)
         {
             List<Chats> chats = _uservice.GetMessages(connected);
             List<Messages> messages = null;
