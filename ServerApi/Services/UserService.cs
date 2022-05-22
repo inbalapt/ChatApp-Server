@@ -15,7 +15,7 @@ namespace ServerApp.Services
                             new Messages(){
                                 Id=1, Content="hi", Created="14/7", Sent=true},
                              new Messages(){
-                                Id=1, Content="what do you wamt", Created="14/7", Sent=false}
+                                Id=2, Content="what do you wamt", Created="14/7", Sent=false}
                         }
                     },
                     new Chats()
@@ -25,7 +25,7 @@ namespace ServerApp.Services
                             new Messages(){
                                 Id=1, Content="hello mis", Created="14/7", Sent=true},
                              new Messages(){
-                                Id=1, Content="what you wamt", Created="14/7", Sent=false}
+                                Id=2, Content="what you wamt", Created="14/7", Sent=false}
                         }
                     }
                },
