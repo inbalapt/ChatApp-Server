@@ -20,6 +20,7 @@ namespace ServerApp.Controllers
             _uservice = new UserService();
         }
 
+
         // GET: Contacts
         [HttpGet("{connected}")]
         public IEnumerable<Contacts> Index(string connected)
@@ -259,6 +260,15 @@ namespace ServerApp.Controllers
 
             return Ok();
 
+        }
+
+        // GET: Contacts
+        [HttpGet("{connected}/password")]
+        public IActionResult GetPassword(string connected)
+        {
+            string answer = _uservice.RetPassword(connected);
+
+            return Ok(_uservice.RetPassword(connected));
         }
 
         // GET: Contacts/Edit/5

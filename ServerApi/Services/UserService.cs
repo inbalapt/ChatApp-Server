@@ -76,7 +76,17 @@ namespace ServerApp.Services
             }
             return null;
         }
-
+        public string RetPassword(string connected)
+        {
+            foreach (var user in users)
+            {
+                if (user.Id == connected)
+                {
+                    return user.Password;
+                }
+            }
+            return null;
+        }
         public List<Chats> GetMessages(string connected)
         {
             foreach (var user in users)
