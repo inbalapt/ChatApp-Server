@@ -15,6 +15,14 @@ namespace ServerApp.Controllers
     {
         private UserService _uservice;
 
+        public class User
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string Server { get; set; }
+            public string Connected { get; set; }
+        }
+
         public ContactsController()
         {
             _uservice = new UserService();
@@ -30,26 +38,27 @@ namespace ServerApp.Controllers
 
         // GET: Contacts/Details/5
         [HttpGet("{connected}/{id}")]
-        public IActionResult /*Contacts*/ Details(string connected,string id)
+        public IActionResult /*Contacts*/ Details(string connected, string id)
         {
-            if (!ContactsExists(connected,id))
+            if (!ContactsExists(connected, id))
             {
                 return BadRequest();
             }
-            return Ok(_uservice.GetContacts(connected).Where(x => x.Id  == id).FirstOrDefault());
+            return Ok(_uservice.GetContacts(connected).Where(x => x.Id == id).FirstOrDefault());
         }
 
 
-        [HttpPost("{connected}")]
-        public IActionResult Create(string connected, [Bind("Id,Name,Server")] Contacts contacts)
+        [HttpPost]
+        public IActionResult Create([FromBody] User user /*string connected,  string id, string name, string server*/ /*[Bind("Id,Name,Server")] Contacts contacts*/)
         {
-            if (ContactsExists(connected,contacts.Id))
+            Contacts contacts = new Contacts() { Id=user.Id, Server=user.Server, Name=user.Name };
+            if (ContactsExists(user.Connected,user.Id))
             {
                 return BadRequest();
             }
             contacts.LastDate = null;
             contacts.Last = null;
-            _uservice.GetContacts(connected).Add(contacts);
+            _uservice.GetContacts(user.Connected).Add(contacts);
             return Ok();
         }
 
