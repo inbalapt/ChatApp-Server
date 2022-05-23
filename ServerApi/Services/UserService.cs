@@ -6,7 +6,10 @@ namespace ServerApp.Services
     {
         private static List<User> users = new List<User>()
         {
+
             new User(){Id = "inbal33" , Name = "Inbal", Server = "" , Password="123",
+
+         
               Chats=new List<Chats>{
                     new Chats()
                     {
