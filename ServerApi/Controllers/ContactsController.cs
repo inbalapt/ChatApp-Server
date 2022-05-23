@@ -114,8 +114,8 @@ namespace ServerApp.Controllers
         }
 
         // POST: Contacts/:id/messages 
-        [HttpPost("{id}/messages")]
-        public IActionResult /*IEnumerable<Messages>*/ PostByIDMessages(string id ,[Bind("Content,Created,Sent")] Messages message)
+        [HttpPost("{connected}/{id}/messages")]
+        public IActionResult /*IEnumerable<Messages>*/ PostByIDMessages(string connected, string id ,[Bind("Content,Created,Sent")] Messages message)
         {
             List<Chats> chats = _uservice.GetMessages(connected);
             List<Messages> messages = null;
@@ -139,8 +139,8 @@ namespace ServerApp.Controllers
 
 
         // GET: Contacts/:id/messages/:id2
-        [HttpGet("{id}/messages/{idmessage}")]
-        public IActionResult /*IEnumerable<Messages>*/ GetMessage(string id, int idmessage)
+        [HttpGet("{connected}/{id}/messages/{idmessage}")]
+        public IActionResult /*IEnumerable<Messages>*/ GetMessage(string connected, string id, int idmessage)
         {
             List<Chats> chats = _uservice.GetMessages(connected);
             List<Messages> messages = null;
