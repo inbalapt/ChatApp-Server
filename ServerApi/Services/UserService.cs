@@ -6,11 +6,11 @@ namespace ServerApp.Services
     {
         private static List<User> users = new List<User>()
         {
-            new User(){Id = "inbal" , Name = "Inbal", Server = "" , Password="123",
+            new User(){Id = "inbal33" , Name = "Inbal", Server = "" , Password="123",
               Chats=new List<Chats>{
                     new Chats()
                     {
-                        Id = "amit", Messages=new List<Messages>()
+                        Id = "yoval99", Messages=new List<Messages>()
                         {
                             new Messages(){
                                 Id=1, Content="hi", Created="14/7", Sent=true},
@@ -31,7 +31,7 @@ namespace ServerApp.Services
                },
               Contacts = new List<Contacts>()
               {
-                  new Contacts(){Id="amit", Name="amiiiiit", Last="what?", LastDate="14/3", Server="" },
+                  new Contacts(){Id="yoval99", Name="amiiiiit", Last="what?", LastDate="14/3", Server="" },
                    new Contacts(){Id="noale10", Name="noah", Last="how?", LastDate="14/3", Server="" }
                }
             },
@@ -55,11 +55,11 @@ namespace ServerApp.Services
                    //new Contacts(){Id="inbal", Name="Inbal", Last="hello", LastDate="14/3", Server="" }
                }
             },
-              new User(){Id = "amit" , Name = "amiiiiit", Server = "" , Password="144",
+              new User(){Id = "yoval99" , Name = "amiiiiit", Server = "" , Password="144",
               Chats=new List<Chats>{
                     new Chats()
                     {
-                        Id = "amit", Messages=new List<Messages>()
+                        Id = "harel21", Messages=new List<Messages>()
                         {
                             new Messages(){
                                 Id=1, Content="hi", Created="14/7", Sent=true},
@@ -69,7 +69,7 @@ namespace ServerApp.Services
                     },
                     new Chats()
                     {
-                        Id = "inbal", Messages=new List<Messages>()
+                        Id = "inbal33", Messages=new List<Messages>()
                         {
                             new Messages(){
                                 Id=1, Content="hello misis", Created="14/7", Sent=true},
@@ -80,8 +80,8 @@ namespace ServerApp.Services
                },
               Contacts = new List<Contacts>()
               {
-                  new Contacts(){Id="amit", Name="amiiiiit", Last="what?", LastDate="14/3", Server="" },
-                   new Contacts(){Id="inbal", Name="Inbal", Last="how?", LastDate="14/3", Server="" }
+                  new Contacts(){Id="yoval99", Name="amiiiiit", Last="what?", LastDate="14/3", Server="" },
+                   new Contacts(){Id="inbal33", Name="Inbal", Last="how?", LastDate="14/3", Server="" }
                }
             }
         };
