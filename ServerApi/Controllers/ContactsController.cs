@@ -177,8 +177,8 @@ namespace ServerApp.Controllers
 
 
         // PUT: Contacts/:id/messages/:id2
-        [HttpPut("{id}/messages/{idmessage}")]
-        public IActionResult /*IEnumerable<Messages>*/ PutMessage(string id, int idmessage, [Bind("Id,Content,Created,Sent")] Messages message)
+        [HttpPut("{connected}/{id}/messages/{idmessage}")]
+        public IActionResult /*IEnumerable<Messages>*/ PutMessage(string connected, string id, int idmessage, [Bind("Id,Content,Created,Sent")] Messages message)
         {
             List<Chats> chats = _uservice.GetMessages(connected);
             List<Messages> messages = null;
