@@ -6,7 +6,7 @@ namespace ServerApp.Services
     {
         private static List<User> users = new List<User>()
         {
-            new User(){Id = "inbal" , Name = "Noa", Server = "" , Password="123",
+            new User(){Id = "inbal" , Name = "Inbal", Server = "" , Password="123",
               Chats=new List<Chats>{
                     new Chats()
                     {
@@ -33,6 +33,55 @@ namespace ServerApp.Services
               {
                   new Contacts(){Id="amit", Name="amiiiiit", Last="what?", LastDate="14/3", Server="" },
                    new Contacts(){Id="noale10", Name="noah", Last="how?", LastDate="14/3", Server="" }
+               }
+            },
+             new User(){Id = "noale10" , Name = "noah", Server = "" , Password="1111",
+              Chats=new List<Chats>{
+                    new Chats()
+                    {
+                        Id = "amit", Messages=new List<Messages>()
+                        {
+                            new Messages(){
+                                Id=1, Content="hi", Created="14/7", Sent=true},
+                             new Messages(){
+                                Id=2, Content="what do you wamt", Created="14/7", Sent=false}
+                        }
+                    }
+                    
+               },
+              Contacts = new List<Contacts>()
+              {
+                  new Contacts(){Id="amit", Name="amiiiiit", Last="what?", LastDate="14/3", Server="" },
+                   //new Contacts(){Id="inbal", Name="Inbal", Last="hello", LastDate="14/3", Server="" }
+               }
+            },
+              new User(){Id = "amit" , Name = "amiiiiit", Server = "" , Password="144",
+              Chats=new List<Chats>{
+                    new Chats()
+                    {
+                        Id = "amit", Messages=new List<Messages>()
+                        {
+                            new Messages(){
+                                Id=1, Content="hi", Created="14/7", Sent=true},
+                             new Messages(){
+                                Id=2, Content="what do you wamt", Created="14/7", Sent=false}
+                        }
+                    },
+                    new Chats()
+                    {
+                        Id = "inbal", Messages=new List<Messages>()
+                        {
+                            new Messages(){
+                                Id=1, Content="hello misis", Created="14/7", Sent=true},
+                             new Messages(){
+                                Id=2, Content="what you want", Created="14/7", Sent=false}
+                        }
+                    }
+               },
+              Contacts = new List<Contacts>()
+              {
+                  new Contacts(){Id="amit", Name="amiiiiit", Last="what?", LastDate="14/3", Server="" },
+                   new Contacts(){Id="inbal", Name="Inbal", Last="how?", LastDate="14/3", Server="" }
                }
             }
         };

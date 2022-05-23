@@ -271,6 +271,13 @@ namespace ServerApp.Controllers
             return Ok(_uservice.RetPassword(connected));
         }
 
+
+        [HttpGet("users")]
+        public IActionResult GetUsers()
+        {
+            return Ok(_uservice.GetAll());
+        }
+
         // GET: Contacts/Edit/5
         /*public async Task<IActionResult> Edit(string id)
         {
