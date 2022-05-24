@@ -22,7 +22,24 @@ namespace ServerApp.Controllers
             public string Server { get; set; }
             public string Connected { get; set; }
         }
+        /*
+        public class NewMessage
+        {
+      
+            public int Id { get; set; }
+            
+            public string Content { get; set; }
 
+            public string Created { get; set; }
+
+
+            public Boolean Sent { get; set; }
+
+            public string MyUser { get; set; }
+
+            public string OtherUser { get; set; }
+        }
+        */
         public ContactsController()
         {
             _uservice = new UserService();
@@ -129,17 +146,19 @@ namespace ServerApp.Controllers
         {
             List<Chats> chats = _uservice.GetMessages(connected);
             List<Messages> messages = null;
+            int flag = 0;
             foreach (Chats chat in chats)
             {
                 if (chat.Id == id)
                 {
                     //messages = chat.Messages;
+                    flag = 1;
                     int new_id = chat.Messages.Max(x => x.Id) + 1;
                     message.Id = new_id;
                     chat.Messages.Add(message);
                 }
             }
-            if (messages != null)
+            if (flag == 1)
             {
                 return Ok(messages);
             }
@@ -271,7 +290,7 @@ namespace ServerApp.Controllers
 
         }
 
-        // GET: Contacts
+        // GET: Contact's password
         [HttpGet("{connected}/password")]
         public IActionResult GetPassword(string connected)
         {
@@ -280,6 +299,14 @@ namespace ServerApp.Controllers
             return Ok(_uservice.RetPassword(connected));
         }
 
+        // GET: Contact's name
+        [HttpGet("{connected}/name")]
+        public IActionResult GetName(string connected)
+        {
+            string answer = _uservice.RetName(connected);
+
+            return Ok(_uservice.RetName(connected));
+        }
 
         [HttpGet("users")]
         public IActionResult GetUsers()
