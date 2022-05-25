@@ -22,6 +22,13 @@ namespace ServerApp.Controllers
             public string Server { get; set; }
             public string Connected { get; set; }
         }
+
+        public class Invited
+        {
+            public string From { get; set; }
+            public string To { get; set; }
+            public string Server { get; set; }
+        }
         public class Userdetailes
         {
             public string Id { get; set; }
@@ -418,11 +425,11 @@ namespace ServerApp.Controllers
 
 
         [HttpPost("transfer")]
-        public IActionResult /*IEnumerable<Messages>*/ Transfer(string from, string id, [Bind("Content")] Messages message)
+        public IActionResult /*IEnumerable<Messages>*/ Transfer(string from, string to, string content)
         {
-            List<Chats> chats = _uservice.GetMessages(from);
-
-            List<Contacts> contacts = _uservice.GetContacts(from);
+            List<Chats> chats = _uservice.GetMessages(to);
+            Messages message = new Messages();
+            List<Contacts> contacts = _uservice.GetContacts(to);
             //List<Messages> messages = null;
             int flag = 0;
             DateTime today = DateTime.Now;
@@ -430,9 +437,10 @@ namespace ServerApp.Controllers
             int minute = today.Minute;
             string time = hour.ToString() + ":" + minute.ToString();
             message.Created = time;
+            message.Content = content;
             foreach (Chats chat in chats)
             {
-                if (chat.Id == id)
+                if (chat.Id == from)
                 {
                     flag = 1;
                     //messages = chat.Messages;
@@ -446,7 +454,7 @@ namespace ServerApp.Controllers
                         int new_id = chat.Messages.Max(x => x.Id) + 1;
                         message.Id = new_id;
                     }
-                    message.Sent = true;
+                    message.Sent = false;
                     chat.Messages.Add(message);
 
                 }
@@ -455,7 +463,7 @@ namespace ServerApp.Controllers
             {
                 foreach (Contacts contact in contacts)
                 {
-                    if (contact.Id == id)
+                    if (contact.Id == from)
                     {
                         //Contacts contact2 = new Contacts;
                         contact.Last = message.Content;
@@ -466,6 +474,27 @@ namespace ServerApp.Controllers
             }
 
             return BadRequest();
+        }
+
+        [HttpPost("invitations")]
+        public IActionResult Invitations([FromBody] Invited invited /*string connected,  string id, string name, string server*/ /*[Bind("Id,Name,Server")] Contacts contacts*/)
+        {
+            Contacts contacts = new Contacts() { Id = invited.From, Server = invited.Server };
+            if (ContactsExists(invited.To, invited.From))
+            {
+                return BadRequest();
+            }
+            contacts.LastDate = null;
+            contacts.Last = null;
+            contacts.Name = _uservice.GetNameById(invited.From);
+            _uservice.GetContacts(invited.To).Add(contacts);
+            Chats chats = new Chats()
+            {
+                Id = invited.From,
+                Messages = new List<Messages>()
+            };
+            _uservice.GetMessages(invited.To).Add(chats);
+            return Ok();
         }
 
         private bool ContactsExists(string connected, string id)
