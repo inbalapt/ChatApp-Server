@@ -516,6 +516,20 @@ namespace ServerApp.Services
             }
             return null;
         }
+
+        public string RetServer(string connected)
+        {
+            foreach (var user in users)
+            {
+                if (user.Id == connected)
+                {
+                    return user.Server;
+                }
+            }
+            return null;
+        }
+
+
         public string RetName(string connected)
         {
             foreach (var user in users)

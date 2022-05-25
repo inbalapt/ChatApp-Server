@@ -333,6 +333,14 @@ namespace ServerApp.Controllers
             return Ok(_uservice.RetPassword(connected));
         }
 
+        [HttpGet("[controller]/{connected}/server")]
+        public IActionResult GetServer(string connected)
+        {
+            string answer = _uservice.RetServer(connected);
+
+            return Ok(answer);
+        }
+
         // GET: Contact's name
         [HttpGet("[controller]/{connected}/name")]
         public IActionResult GetName(string connected)
