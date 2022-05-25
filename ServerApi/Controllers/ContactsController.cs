@@ -148,7 +148,7 @@ namespace ServerApp.Controllers
         }
 
         // POST: Contacts/:id/messages 
-        /*[HttpPost("[controller]/{connected}/{id}/messages")]
+        [HttpPost("[controller]/add/{connected}/{id}/messages")]
         public IActionResult PostByIDMessages(string connected, string id ,[Bind("Content,Created,Sent")] Messages message)
         {
             List<Chats> chats = _uservice.GetMessages(connected);
@@ -191,7 +191,7 @@ namespace ServerApp.Controllers
             }
 
             return BadRequest();
-        }*/
+        }
 
 
         // GET: Contacts/:id/messages/:id2
