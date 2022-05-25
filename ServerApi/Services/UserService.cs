@@ -481,6 +481,10 @@ namespace ServerApp.Services
         {
             return users;
         }
+        public void Add(User user)
+        {
+            users.Add(user);
+        }
 
         public string GetNameById(string id)
         {
