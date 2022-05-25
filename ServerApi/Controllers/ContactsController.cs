@@ -351,6 +351,11 @@ namespace ServerApp.Controllers
             List<Contacts> contacts = _uservice.GetContacts(connected);
             //List<Messages> messages = null;
             int flag = 0;
+            DateTime today = DateTime.Now;
+            int hour = today.Hour;
+            int minute = today.Minute;
+            string time = hour.ToString() + ":" + minute.ToString();
+            message.Created = time;
             foreach (Chats chat in chats)
             {
                 if (chat.Id == id)
@@ -368,11 +373,6 @@ namespace ServerApp.Controllers
                         message.Id = new_id;
                     }
                     message.Sent = true;
-                    var today = new Date();
-                    /*var hour = addZero(today.getHours())
-                    var minute = addZero(today.getMinutes())*/
-                    var time = hour + ":" + minute;
-
                     chat.Messages.Add(message);
 
                 }
@@ -396,17 +396,21 @@ namespace ServerApp.Controllers
 
 
         [HttpPost("transfer")]
-        public IActionResult /*IEnumerable<Messages>*/ Invitation(string from, string to, string content)
+        public IActionResult /*IEnumerable<Messages>*/ Transfer(string from, string id, [Bind("Content")] Messages message)
         {
             List<Chats> chats = _uservice.GetMessages(from);
 
             List<Contacts> contacts = _uservice.GetContacts(from);
-            Messages message = new Messages() { Content = content, Created =  };
             //List<Messages> messages = null;
             int flag = 0;
+            DateTime today = DateTime.Now;
+            int hour = today.Hour;
+            int minute = today.Minute;
+            string time = hour.ToString() + ":" + minute.ToString();
+            message.Created = time;
             foreach (Chats chat in chats)
             {
-                if (chat.Id == to)
+                if (chat.Id == id)
                 {
                     flag = 1;
                     //messages = chat.Messages;
@@ -420,6 +424,7 @@ namespace ServerApp.Controllers
                         int new_id = chat.Messages.Max(x => x.Id) + 1;
                         message.Id = new_id;
                     }
+                    message.Sent = true;
                     chat.Messages.Add(message);
 
                 }
@@ -440,6 +445,7 @@ namespace ServerApp.Controllers
 
             return BadRequest();
         }
+
         private bool ContactsExists(string connected, string id)
         {
             return (_uservice.GetContacts(connected)?.Any(e => e.Id == id)).GetValueOrDefault();
