@@ -15,12 +15,19 @@ namespace ServerApp.Controllers
     {
         private UserService _uservice;
 
-        public class User
+        public class Usertemp
         {
             public string Id { get; set; }
             public string Name { get; set; }
             public string Server { get; set; }
             public string Connected { get; set; }
+        }
+        public class Userdetailes
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string Server { get; set; }
+            public string Password { get; set; }
         }
         /*
         public class NewMessage
@@ -64,12 +71,11 @@ namespace ServerApp.Controllers
             return Ok(_uservice.GetContacts(connected).Where(x => x.Id == id).FirstOrDefault());
         }
 
-
         [HttpPost("[controller]")]
-        public IActionResult Create([FromBody] User user /*string connected,  string id, string name, string server*/ /*[Bind("Id,Name,Server")] Contacts contacts*/)
+        public IActionResult Create([FromBody] Usertemp user /*string connected,  string id, string name, string server*/ /*[Bind("Id,Name,Server")] Contacts contacts*/)
         {
-            Contacts contacts = new Contacts() { Id=user.Id, Server=user.Server, Name=user.Name };
-            if (ContactsExists(user.Connected,user.Id))
+            Contacts contacts = new Contacts() { Id = user.Id, Server = user.Server, Name = user.Name };
+            if (ContactsExists(user.Connected, user.Id))
             {
                 return BadRequest();
             }
@@ -82,6 +88,22 @@ namespace ServerApp.Controllers
                 Messages = new List<Messages>()
             };
             _uservice.GetMessages(user.Connected).Add(chats);
+            return Ok();
+        }
+
+        [HttpPost("[controller]/new")]
+        public IActionResult CreateNewUser([FromBody] Userdetailes user /*string connected,  string id, string name, string server*/ /*[Bind("Id,Name,Server")] Contacts contacts*/)
+        {
+            try
+            {
+                User newUser = new User() { Id=user.Id, Name=user.Name, Server=user.Server, Password = user.Password, Chats = new List<Chats>(), Contacts = new List<Contacts>() };
+                _uservice.Add(newUser);
+
+            }catch (Exception ex)
+            {
+                return BadRequest();
+            }
+            
             return Ok();
         }
 

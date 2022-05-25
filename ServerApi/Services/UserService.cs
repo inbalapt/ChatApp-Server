@@ -503,6 +503,10 @@ namespace ServerApp.Services
         {
             return users;
         }
+        public void Add(User user)
+        {
+            users.Add(user);
+        }
 
         public List<Contacts> GetContacts(string connected)
         {
