@@ -145,7 +145,9 @@ namespace ServerApp.Controllers
         public IActionResult /*IEnumerable<Messages>*/ PostByIDMessages(string connected, string id ,[Bind("Content,Created,Sent")] Messages message)
         {
             List<Chats> chats = _uservice.GetMessages(connected);
-            List<Messages> messages = null;
+
+            List<Contacts> contacts = _uservice.GetContacts(connected);
+            //List<Messages> messages = null;
             int flag = 0;
             foreach (Chats chat in chats)
             {
@@ -156,11 +158,21 @@ namespace ServerApp.Controllers
                     int new_id = chat.Messages.Max(x => x.Id) + 1;
                     message.Id = new_id;
                     chat.Messages.Add(message);
+
                 }
             }
             if (flag == 1)
             {
-                return Ok(messages);
+                foreach (Contacts contact in contacts)
+                {
+                    if(contact.Id == id)
+                    {
+                        //Contacts contact2 = new Contacts;
+                        contact.Last = message.Content;
+                        contact.LastDate = message.Created;
+                    }
+                }
+                return Ok(contacts);
             }
 
             return BadRequest();
