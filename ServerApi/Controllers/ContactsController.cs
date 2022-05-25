@@ -344,7 +344,7 @@ namespace ServerApp.Controllers
         [HttpPost("[controller]/{connected}/{id}/messages")]
 
         //,Created,Sent
-        public IActionResult /*IEnumerable<Messages>*/ PostByIDMessages(string connected, string id, [Bind("Content")] Messages message)
+        public IActionResult /*IEnumerable<Messages>*/ PostMessage(string connected, string id, [Bind("Content")] Messages message)
         {
             List<Chats> chats = _uservice.GetMessages(connected);
 
