@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ServerApi.Data;
+using ServerApi.Hubs;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ServerApiContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ServerApiContext") ?? throw new InvalidOperationException("Connection string 'ServerApiContext' not found.")));
@@ -40,6 +42,11 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.UseAuthentication();
+
+app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapHub<MyHub>("/MyHub");
+    });
 
 app.MapControllers();
 
