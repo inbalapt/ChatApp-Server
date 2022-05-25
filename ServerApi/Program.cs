@@ -20,10 +20,26 @@ builder.Services.AddCors(options =>
         {
             builder.AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader().AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("http://localhost:3000")
+            .AllowCredentials(); 
         });
 
 });
+
+/*builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
+        builder =>
+        {
+            builder.AllowAnyHeader()
+                   .AllowAnyMethod()
+                   .SetIsOriginAllowed((host) => true)
+                   .AllowCredentials();
+        }));*/
+
+builder.Services.AddSignalR();
+builder.Services.AddRazorPages();
+//builder.Services.AddControllers();
 
 
 var app = builder.Build();
@@ -43,10 +59,15 @@ app.UseAuthorization();
 
 app.UseAuthentication();
 
+app.UseRouting();
 app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapHub<MyHub>("/MyHub");
-    });
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<MyHub>("/MyHub");
+});
+
+//app.UseCors("CorsPolicy");
+
 
 app.MapControllers();
 

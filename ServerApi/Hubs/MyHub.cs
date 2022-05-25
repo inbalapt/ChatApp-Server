@@ -4,9 +4,9 @@ namespace ServerApi.Hubs
 {
     public class MyHub : Hub
     {
-        public async Task Changed(string value)
+        public async Task Changed(string usersent, string sender)
         {
-            await Clients.All.SendAsync("ChangeReceived", value);
+            await Clients.All.SendAsync("ChangeReceived", usersent, sender);
         }
     }
 }
