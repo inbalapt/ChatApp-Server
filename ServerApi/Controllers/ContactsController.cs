@@ -76,6 +76,12 @@ namespace ServerApp.Controllers
             contacts.LastDate = null;
             contacts.Last = null;
             _uservice.GetContacts(user.Connected).Add(contacts);
+            Chats chats = new Chats()
+            {
+                Id = user.Id,
+                Messages = new List<Messages>()
+            };
+            _uservice.GetMessages(user.Connected).Add(chats);
             return Ok();
         }
 
@@ -136,6 +142,7 @@ namespace ServerApp.Controllers
             {
                 return Ok(messages);
             }
+
             
             return BadRequest();
         }
@@ -153,10 +160,18 @@ namespace ServerApp.Controllers
             {
                 if (chat.Id == id)
                 {
-                    //messages = chat.Messages;
                     flag = 1;
-                    int new_id = chat.Messages.Max(x => x.Id) + 1;
-                    message.Id = new_id;
+                    //messages = chat.Messages;
+                    if (chat.Messages.Count == 0)
+                    {
+                        chat.Messages = new List<Messages>();
+                        int new_id = 1;
+                    }
+                    else
+                    {
+                        int new_id = chat.Messages.Max(x => x.Id) + 1;
+                        message.Id = new_id;
+                    }
                     chat.Messages.Add(message);
 
                 }
