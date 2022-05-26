@@ -32,9 +32,9 @@ namespace ServerApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, string name, int rating, string description)
+        public IActionResult Edit(int id, string name, int rating, string description,string time)
         {
-            service.Edit(id, name, rating, description);
+            service.Edit(id, name, rating, description,time);
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Add()
@@ -42,9 +42,9 @@ namespace ServerApp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Add(string name,int rating, string description)
+        public IActionResult Add(string name,int rating, string description, string time)
         {
-            service.Create(name,rating,description);
+            service.Create(name,rating,description, time);
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Delete(int id)

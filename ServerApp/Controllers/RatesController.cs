@@ -20,6 +20,35 @@ namespace ServerApp.Controllers
             _service = new RateService();
         }
 
+
+        public string GetTime()
+        {
+
+            DateTime today = DateTime.Now;
+            int hour = today.Hour;
+            string hourStr, minStr;
+            if(hour < 10)
+            {
+                hourStr = "0"+ hour.ToString();
+            }
+            else
+            {
+                hourStr = hour.ToString();
+            }
+            int minute = today.Minute;
+            if (minute < 10)
+            {
+                minStr = "0" + minute.ToString();
+            }
+            else
+            {
+                minStr = minute.ToString();
+            }
+
+            string time = hourStr + ":" + minStr;
+            return time;
+        }
+
         // GET: Rates
         public IActionResult Index()
         {
@@ -58,7 +87,10 @@ namespace ServerApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.Create(rate.Name, rate.Rating, rate.Description);
+                string time = GetTime();
+                //rate.Time = time;
+                _service.Create(rate.Name, rate.Rating, rate.Description, time);
+                rate.Time = time;
                 return RedirectToAction(nameof(Index));
             }
             return View(rate);
@@ -96,7 +128,8 @@ namespace ServerApp.Controllers
             {
                 try
                 {
-                    _service.Edit(rate.Id, rate.Name, rate.Rating, rate.Description);
+                    rate.Time = GetTime();
+                    _service.Edit(rate.Id, rate.Name, rate.Rating, rate.Description, rate.Time);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

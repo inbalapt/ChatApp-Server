@@ -20,5 +20,8 @@ namespace ServerApp.Models
         [Range(1,5, ErrorMessage ="Please select a rate between 1-5")]
         [Required(ErrorMessage = "This field is required!")]
         public int Rating { get; set; }
+
+        [Display(Name = "Time")]
+        public string? Time { get; set; }
     }
 }
