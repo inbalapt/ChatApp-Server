@@ -4,8 +4,24 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Rates Page</h1>
+@{
+    double avg = 0, sum = 0;
+    int count = 0;
+    
+    foreach (var item in Model)
+    {
+        sum += item.Rating;
+        count++;
+    }
+    if(count > 0)
+    {
+        avg = sum / count;
+    }
 
+}
+
+<h1>Rates Page</h1>
+<h3>Average: @string.Format("{0:0.0.0}",avg)</h3>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -14,12 +30,19 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+               
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                Options
+            </th>
+            <th>
+                Time
             </th>
             <th></th>
         </tr>
@@ -40,6 +63,9 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
             </td>
         </tr>
 }

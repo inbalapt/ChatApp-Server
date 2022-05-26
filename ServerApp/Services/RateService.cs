@@ -16,21 +16,22 @@ namespace ServerApp.Services
 
         }
 
-        public void Create(string name, int rating, string description)
+        public void Create(string name, int rating, string description, string time)
         {
             int id = 1;
             if(rates.Count != 0)
             {
                 id = rates.Max(x => x.Id) + 1;
             }
-            rates.Add(new Rate() { Rating = rating, Description = description, Name = name, Id = id });
+            rates.Add(new Rate() { Rating = rating, Description = description, Name = name, Id = id, Time=time });
         }
-        public void Edit(int id, string name, int rating, string description)
+        public void Edit(int id, string name, int rating, string description, string time)
         {
             Rate rate = Get(id);
             rate.Name = name;
             rate.Rating = rating;
             rate.Description = description;
+            rate.Time = time;
         }
         public void Delete(int id)
         {
