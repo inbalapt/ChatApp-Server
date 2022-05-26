@@ -533,6 +533,23 @@ namespace ServerApp.Services
             return null;
         }
 
+        public string ReturnFriendServer(string connected, string userId)
+        {
+            foreach (var user in users)
+            {
+                if (user.Id == connected)
+                {
+                    foreach(var contact in user.Contacts)
+                    {
+                        if(contact.Id == userId)
+                        {
+                            return contact.Server;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
 
         public string RetName(string connected)
         {

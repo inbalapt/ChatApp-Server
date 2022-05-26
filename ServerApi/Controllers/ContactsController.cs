@@ -363,6 +363,15 @@ namespace ServerApp.Controllers
             return Ok(answer);
         }
 
+        [HttpGet("[controller]/{connected}/contacts")]
+        public IActionResult GetContacts(string connected)
+        {
+            List<Contacts> contacts = new List<Contacts>();
+            contacts = _uservice.GetContacts(connected);
+            return Ok(contacts);
+            //return BadRequest();
+        }
+
         // GET: Contact's name
         [HttpGet("[controller]/{connected}/name")]
         public IActionResult GetName(string connected)
@@ -433,11 +442,11 @@ namespace ServerApp.Controllers
 
 
         [HttpPost("transfer")]
-        public IActionResult /*IEnumerable<Messages>*/ Transfer(string from, string to, string content)
+        public IActionResult /*IEnumerable<Messages>*/ Transfer([FromBody] Invited invited)
         {
-            List<Chats> chats = _uservice.GetMessages(to);
+            List<Chats> chats = _uservice.GetMessages(invited.To);
             Messages message = new Messages();
-            List<Contacts> contacts = _uservice.GetContacts(to);
+            List<Contacts> contacts = _uservice.GetContacts(invited.To);
             //List<Messages> messages = null;
             int flag = 0;
             DateTime today = DateTime.Now;
@@ -445,10 +454,10 @@ namespace ServerApp.Controllers
             int minute = today.Minute;
             string time = hour.ToString() + ":" + minute.ToString();
             message.Created = time;
-            message.Content = content;
+            message.Content = invited.Server;
             foreach (Chats chat in chats)
             {
-                if (chat.Id == from)
+                if (chat.Id == invited.From)
                 {
                     flag = 1;
                     //messages = chat.Messages;
@@ -471,7 +480,7 @@ namespace ServerApp.Controllers
             {
                 foreach (Contacts contact in contacts)
                 {
-                    if (contact.Id == from)
+                    if (contact.Id == invited.From)
                     {
                         //Contacts contact2 = new Contacts;
                         contact.Last = message.Content;
