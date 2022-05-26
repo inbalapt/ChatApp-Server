@@ -6,4 +6,4 @@ Our local host number is 7100.
 ## What our server support?
 * Rating the wanted page.
 * API communication
-Run both of them to support this facilities.
+### Run both of them to support this facilities.
